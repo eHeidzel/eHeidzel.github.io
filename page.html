@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Задержка 5 секунд</title>
+</head>
+<body>
+    <h1>Подождите 5 секунд...</h1>
+    <div id="url-display"></div>
+    
+    <script>
+        setTimeout(() => {
+            const savedUrl = localStorage.getItem('previousPageUrl');
+            document.getElementById('url-display').innerHTML = `
+                <h2>URL предыдущей страницы:</h2>
+                <p>${savedUrl || 'Не найден'}</p>
+            `;
+        }, 5000);
+    </script>
+</body>
+</html>

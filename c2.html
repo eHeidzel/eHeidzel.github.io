@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Вариант 16</title>
+        <link rel="stylesheet" href="user-form.css">
+    </head>
+    <body>
+        <p>Гейдель Евгений Витальевич</p>
+        <img src="1.jpg" alt="Собака">
+        <div id="info"></div>
+        <button id="styleBtn">Изменить стиль</button>
+        <div style="display: flex; justify-content: center; align-items: center; flex-direction: column;">
+            <div class="order-header">
+                <h1>Заполните форму заказа</h1>
+                <p>И мы свяжемся с Вами для уточнения деталей в ближайшее время</p>
+            </div>
+            
+            <form class="order-form" id="orderForm">
+                <div class="form-row">
+                    <div class="label-col required">Введите имя</div>
+                    <div class="input-col">
+                        <input type="text" id="name" placeholder="Иван Иванов"
+                                minlength="2" maxlength="50">
+                        <div class="error-message" id="name-error"></div>
+                    </div>
+                    <div class="hint-col">
+                        Как Вам было бы приятно, чтобы к Вам обращались наши менеджеры
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="label-col required">Телефон</div>
+                    <div class="input-col">
+                        <input type="tel" id="phone" placeholder="8 (___) ___-____"
+                                pattern="[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}"
+                                title="Формат: +7 (XXX) XXX-XX-XX">
+                        <div class="error-message" id="phone-error"></div>
+                    </div>
+                    <div class="hint-col">
+                        По этому номеру с вами свяжется менеджер, чтобы уточнить детали заказа
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="label-col required">Email</div>
+                    <div class="input-col">
+                        <input type="email" id="email" placeholder="Ivan@gmail.com"
+                                maxlength="100">
+                        <div class="error-message" id="email-error"></div>
+                    </div>
+                    <div class="hint-col">
+                        На данный email мы вышлем подробную информацию о вашем заказе
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="label-col">Адрес</div>
+                    <div class="input-col">
+                        <input type="text" id="address" placeholder="ул. Ленина, д.25"
+                                maxlength="200">
+                        <div class="error-message" id="address-error"></div>
+                    </div>
+                    <div class="hint-col">
+                        Адрес, по которому будет осуществлена доставка
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="label-col">Комментарий</div>
+                    <div class="input-col">
+                        <textarea id="comment" placeholder="Ваши пожелания и комментарии к заказу"
+                                    maxlength="500"></textarea>
+                        <div class="error-message" id="comment-error"></div>
+                    </div>
+                    <div class="hint-col">
+                        Ваши пожелания и комментарии к заказу
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">СФОРМИТЬ ЗАКАЗ</button>
+            </form>
+        </div>
+
+        <script>
+            setTimeout(() => {
+                const status = document.readyState;
+                document.getElementById('info').textContent = `Статус загрузки: ${status}`;
+                
+                const birthplace = document.createElement('p');
+                birthplace.textContent = 'Место рождения: Гродно';
+                document.body.insertBefore(birthplace, document.querySelector('img').nextSibling);
+            }, 5000);
+        </script>
+
+        <script>
+            document.getElementById('styleBtn').addEventListener('click', function() {
+                // 1. Цвет фона документа
+                document.body.style.backgroundColor = 'lightblue';
+                
+                // 2. Стиль текста
+                document.body.style.fontFamily = 'Verdana';
+                document.body.style.fontSize = '14px';
+                document.body.style.color = 'green';
+                
+                // 3. Рамка вокруг изображений
+                const images = document.getElementsByTagName('img');
+                for (let img of images) {
+                    img.style.border = '1px solid red';
+                }
+            });
+        </script>
+
+        <script>
+            window.addEventListener('beforeunload', function(event) {
+                event.preventDefault();
+                event.returnValue = 'Вы уверены?';
+                localStorage.setItem('previousPageUrl', window.location.href);
+                
+                // Попробовать открыть через setTimeout (но браузер может заблокировать)
+                setTimeout(() => {
+                    window.open('page.html', '_blank');
+                }, 100);
+            });
+        </script>
+
+        <script>
+            document.getElementById('orderForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                let isValid = true;
+    
+                // Валидация имени
+                const nameInput = document.getElementById('name');
+                const nameError = document.getElementById('name-error');
+                if (!nameInput.value.trim()) {
+                    nameInput.classList.add('error');
+                    nameError.textContent = 'Поле обязательно для заполнения';
+                    nameError.style.display = 'block';
+                    isValid = false;
+                } else if (nameInput.value.length < 2 || nameInput.value.length > 50) {
+                    nameInput.classList.add('error');
+                    nameError.textContent = 'Имя должно быть от 2 до 50 символов';
+                    nameError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    nameInput.classList.remove('error');
+                    nameInput.classList.add('valid');
+                    nameError.style.display = 'none';
+                }
+    
+                // Валидация телефона
+                const phoneInput = document.getElementById('phone');
+                const phoneError = document.getElementById('phone-error');
+                const phonePattern = /^[\+]\d{1}\s[\(]\d{3}[\)]\s\d{3}[\-]\d{2}[\-]\d{2}$/;
+                if (!phoneInput.value.trim()) {
+                    phoneInput.classList.add('error');
+                    phoneError.textContent = 'Поле обязательно для заполнения';
+                    phoneError.style.display = 'block';
+                    isValid = false;
+                } else if (!phonePattern.test(phoneInput.value)) {
+                    phoneInput.classList.add('error');
+                    phoneError.textContent = 'Введите телефон в формате: +7 (XXX) XXX-XX-XX';
+                    phoneError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    phoneInput.classList.remove('error');
+                    phoneInput.classList.add('valid');
+                    phoneError.style.display = 'none';
+                }
+    
+                // Валидация email
+                const emailInput = document.getElementById('email');
+                const emailError = document.getElementById('email-error');
+                const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailInput.value.trim()) {
+                    emailInput.classList.add('error');
+                    emailError.textContent = 'Поле обязательно для заполнения';
+                    emailError.style.display = 'block';
+                    isValid = false;
+                } else if (!emailPattern.test(emailInput.value)) {
+                    emailInput.classList.add('error');
+                    emailError.textContent = 'Введите корректный email';
+                    emailError.style.display = 'block';
+                    isValid = false;
+                } else if (emailInput.value.length > 100) {
+                    emailInput.classList.add('error');
+                    emailError.textContent = 'Email не должен превышать 100 символов';
+                    emailError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    emailInput.classList.remove('error');
+                    emailInput.classList.add('valid');
+                    emailError.style.display = 'none';
+                }
+    
+                // Валидация адреса (необязательное поле)
+                const addressInput = document.getElementById('address');
+                const addressError = document.getElementById('address-error');
+                if (addressInput.value.length > 200) {
+                    addressInput.classList.add('error');
+                    addressError.textContent = 'Адрес не должен превышать 200 символов';
+                    addressError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    addressInput.classList.remove('error');
+                    addressError.style.display = 'none';
+                }
+    
+                // Валидация комментария (необязательное поле)
+                const commentInput = document.getElementById('comment');
+                const commentError = document.getElementById('comment-error');
+                if (commentInput.value.length > 500) {
+                    commentInput.classList.add('error');
+                    commentError.textContent = 'Комментарий не должен превышать 500 символов';
+                    commentError.style.display = 'block';
+                    isValid = false;
+                } else {
+                    commentInput.classList.remove('error');
+                    commentError.style.display = 'none';
+                }
+    
+                if (isValid) {
+                    alert('Форма успешно отправлена!');
+                    // Здесь можно добавить отправку формы на сервер
+                    // this.submit();
+                }
+            });
+    
+            // Добавляем обработчики для валидации при вводе
+            document.getElementById('name').addEventListener('input', function() {
+                this.classList.remove('error', 'valid');
+                document.getElementById('name-error').style.display = 'none';
+            });
+    
+            document.getElementById('phone').addEventListener('input', function() {
+                this.classList.remove('error', 'valid');
+                document.getElementById('phone-error').style.display = 'none';
+            });
+    
+            document.getElementById('email').addEventListener('input', function() {
+                this.classList.remove('error', 'valid');
+                document.getElementById('email-error').style.display = 'none';
+            });
+    
+            document.getElementById('address').addEventListener('input', function() {
+                this.classList.remove('error');
+                document.getElementById('address-error').style.display = 'none';
+            });
+    
+            document.getElementById('comment').addEventListener('input', function() {
+                this.classList.remove('error');
+                document.getElementById('comment-error').style.display = 'none';
+            });
+        </script>
+    </body>
+</html>

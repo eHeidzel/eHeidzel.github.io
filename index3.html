@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Адаптивка на GRID</title>
+    <link rel="stylesheet" href="index2.css">
+    <link rel="stylesheet" href="card.css">
+    <link rel="stylesheet" href="user-form.css">
+    <link rel="stylesheet" href="index3.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Строка 1 с меню -->
+        <div class="line line-type-1">
+            <div class="big-rectangle-el">
+                <div class="menu-container">
+                    <ul class="desktop-menu">
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#">Каталог</a></li>
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Доставка</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                    
+                    <div class="burger-menu" id="burgerMenu">
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                        <div class="burger-line"></div>
+                    </div>
+                    
+                    <ul class="mobile-menu" id="mobileMenu">
+                        <li><a href="#">Главная</a></li>
+                        <li><a href="#">Каталог</a></li>
+                        <li><a href="#">О компании</a></li>
+                        <li><a href="#">Доставка</a></li>
+                        <li><a href="#">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!-- Строка 2 -->
+        <div class="line line-type-3">
+            <div class="square-el"></div>
+            <div class="medium-rectangle-el">
+                <div class="order-header">
+                    <h1>Заполните форму заказа</h1>
+                    <p>И мы свяжемся с Вами для уточнения деталей в ближайшее время</p>
+                </div>
+                
+                <form class="order-form">
+                    <div class="form-row">
+                        <div class="label-col required">Введите имя</div>
+                        <div class="input-col">
+                            <input type="text" placeholder="Иван Иванов" required>
+                        </div>
+                        <div class="hint-col">
+                            Как Вам было бы приятно, чтобы к Вам обращались наши менеджеры
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="label-col required">Телефон</div>
+                        <div class="input-col">
+                            <input type="tel" placeholder="8 (___) ___-____" required>
+                        </div>
+                        <div class="hint-col">
+                            По этому номеру с вами свяжется менеджер, чтобы уточнить детали заказа
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="label-col required">Email</div>
+                        <div class="input-col">
+                            <input type="email" placeholder="Ivan@gmail.com" required>
+                        </div>
+                        <div class="hint-col">
+                            На данный email мы вышлем подробную информацию о вашем заказе
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="label-col">Адрес</div>
+                        <div class="input-col">
+                            <input type="text" placeholder="ул. Ленина, д.25">
+                        </div>
+                        <div class="hint-col">
+                            Адрес, по которому будет осуществлена доставка
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="label-col">Комментарий</div>
+                        <div class="input-col">
+                            <textarea placeholder="Ваши пожелания и комментарии к заказу"></textarea>
+                        </div>
+                        <div class="hint-col">
+                            Ваши пожелания и комментарии к заказу
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn">СФОРМИТЬ ЗАКАЗ</button>
+                </form>
+            </div>
+            <div class="square-el"></div>
+            <div class="square-el"></div>
+        </div>
+        
+        <!-- Строка 3 -->
+        <div class="line line-type-4">
+            <div class="small-rectangle-el"></div>
+            <div class="small-rectangle-el">
+                <div class="product-card">
+                    <div class="product-image-container">
+                        <img class="product-image" src="bed.png" alt="Кровать Льери 160 Velvet Sand">
+                    </div>
+                    
+                    <div class="product-title">Кровать Льери 160 Velvet Sand</div>
+                    
+                    <div class="price-container">
+                        <span class="current-price">1326 руб.</span>
+                        <span class="old-price">1489 руб.</span>
+                        <span class="discount">10%</span>
+                    </div>
+                    
+                    <div class="dimensions-section">
+                        <div class="section-title">Размеры</div>
+                        <div class="dimensions-grid">
+                            <div class="dimension-item">
+                                <span class="dimension-label">Длина</span>
+                                <span class="dimension-value">225 см</span>
+                            </div>
+                            <div class="dimension-item">
+                                <span class="dimension-label">Ширина</span>
+                                <span class="dimension-value">179 см</span>
+                            </div>
+                            <div class="dimension-item">
+                                <span class="dimension-label">Высота</span>
+                                <span class="dimension-value">112 см</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dimensions-section">
+                        <div class="section-title">Спальное место</div>
+                        <div class="dimensions-grid">
+                            <div class="dimension-item">
+                                <span class="dimension-label">Длина</span>
+                                <span class="dimension-value">200 см</span>
+                            </div>
+                            <div class="dimension-item">
+                                <span class="dimension-label">Ширина</span>
+                                <span class="dimension-value">160 см</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="add-to-cart">В корзину</button>
+                    <a href="#" class="details-link">Подробнее о товаре</a>
+                </div>
+            </div>
+            <div class="small-rectangle-el"></div>
+        </div>
+        
+        <!-- Строка 4 -->
+        <div class="line line-type-1">
+            <div class="big-rectangle-el">
+                <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta culpa cumque placeat, dolorum nostrum assumenda quis maiores eius in dolore consectetur iure id perspiciatis praesentium necessitatibus asperiores distinctio numquam expedita.
+                </p>
+            </div>
+        </div>
+        
+        <!-- Строка 5 -->
+        <div class="line line-type-2">
+            <div class="square-el"></div>
+            <div class="square-el"></div>
+            <div class="medium-rectangle-el"></div>
+            <div class="square-el"></div>
+        </div>
+        
+        <!-- Строка 6 -->
+        <div class="line line-type-1">
+            <div class="big-rectangle-el"></div>
+        </div>
+    </div>
+    <script>
+        // Скрипт для работы бургер-меню
+        document.getElementById('burgerMenu').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

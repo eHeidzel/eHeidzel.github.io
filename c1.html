@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Вариант 18</title>
+    <script>
+        function showCurrentYear() {
+            const currentDate = new Date();
+            const currentYear = currentDate.getFullYear();
+            alert("Текущий год: " + currentYear);
+        }
+    </script>
+</head>
+<body>
+    <button onclick="showCurrentYear()">Показать год</button>
+    <br>
+
+    <script src="math.js"></script>
+    <script>
+        const firstName = "Гейдель";
+        const lastName = "Евгений";
+        const repetitions = 5 + 18;
+        
+        // Используем цикл for
+        for (let i = 0; i < repetitions; i++) {
+            document.write(`${firstName} ${lastName} ${i+1}<br>`);
+        }
+
+        const arr = [];
+        for (let i = 0; i < 15; i++) {
+            arr.push(Math.floor(Math.random() * 100));
+        }
+
+        const arrCopy = [...arr];
+        
+        console.log("Исходный массив:", arr);
+        
+        // Находим min и max
+        const min = Math.min(...arr);
+        const max = Math.max(...arr);
+        
+        // Меняем их местами
+        const minIndex = arr.indexOf(min);
+        const maxIndex = arr.indexOf(max);
+        
+        [arr[minIndex], arr[maxIndex]] = [arr[maxIndex], arr[minIndex]];
+        
+        console.log("Измененный массив:", arr);
+        document.write(`Исходный массив: ${arrCopy.join(', ')}<br>`);
+        document.write(`Измененный массив: ${arr.join(', ')}`);
+
+        const tValues = [8, -8, 0, 1, -0.5, 2, -2];
+        const results = [];
+        
+        for (const t of tValues) {
+            const result = calculateS(t);
+            if (result !== null) {
+                results.push(`При t=${t}, S=${result.toFixed(2)}`);
+            }
+        }
+        
+        document.write("<h2>Результаты расчетов:</h2>");
+        document.write(results.join("<br>"));
+
+        document.write("<br><br>");
+
+        const s1 = "Я люблю Беларусь";
+        const s2 = "И учусь в Политехническом колледже";
+        const n = 18; // номер варианта
+        
+        // 1. Длина строки S1
+        const lengthS1 = s1.length;
+        document.write(`1. Длина строки S1: ${lengthS1}<br>`);
+        
+        // 2. n-ый символ и его ASCII-код
+        const char = s1.charAt(n % s1.length);
+        const charCode = char.charCodeAt(0);
+        document.write(`2. ${n}-ый символ: '${char}', ASCII-код: ${charCode}<br>`);
+        
+        // 3. Замена в строке S2
+        const replacedS2 = s2.replaceAll('у', 'а');
+        document.write(`3. Измененная строка S2: ${replacedS2}`);
+    </script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Примеры</title>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('headScriptBtn').onclick = function() {
+                alert('Этот скрипт был в head! DOM полностью загружен.');
+            };
+        });
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Демонстрация возможностей JavaScript</h1>
+        <p>Примеры различных техник и операторов JavaScript</p>
+    </header>
+
+    <section id="embedding">
+        <h2>1. Способы внедрения JavaScript в HTML</h2>
+        
+        <div class="example">
+            <h3>1.1 Встроенный скрипт (inline)</h3>
+            <button onclick="alert('Это встроенный обработчик события!')">Нажми меня</button>
+        </div>
+        
+        <div class="example">
+            <h3>1.2 Скрипт в тегах &lt;script&gt; в head</h3>
+            <button id="headScriptBtn">Нажми меня</button>
+        </div>
+        
+        <div class="example">
+            <h3>1.3 Скрипт в тегах &lt;script&gt; в конце body</h3>
+            <button id="bodyScriptBtn">Нажми меня</button>
+        </div>
+        
+        <div class="example">
+            <h3>1.4 Подключение внешнего файла</h3>
+            <button id="externalScriptBtn">Нажми меня</button>
+        </div>
+    </section>
+
+    <section id="operators">
+        <h2>2. Использование операторов JavaScript</h2>
+        
+        <div class="example">
+            <h3>2.1 Условный оператор if</h3>
+            <button onclick="demoIf()">Проверить возраст</button>
+        </div>
+        
+        <div class="example">
+            <h3>2.2 Оператор switch</h3>
+            <button onclick="demoSwitch()">Выбрать день недели</button>
+        </div>
+        
+        <div class="example">
+            <h3>2.3 Цикл for</h3>
+            <button onclick="demoFor()">Посчитать до 5</button>
+        </div>
+        
+        <div class="example">
+            <h3>2.4 Цикл while</h3>
+            <button onclick="demoWhile()">Сумма чисел</button>
+        </div>
+        
+        <div class="example">
+            <h3>2.5 Цикл do..while</h3>
+            <button onclick="demoDoWhile()">Угадай число</button>
+        </div>
+        
+        <div class="example">
+            <h3>2.6 Оператор break</h3>
+            <button onclick="demoBreak()">Найти первое четное число</button>
+        </div>
+        
+        <div class="example">
+            <h3>2.7 Оператор continue</h3>
+            <button onclick="demoContinue()">Только нечетные числа</button>
+        </div>
+        
+        <div class="example">
+            <h3>2.8 Оператор return</h3>
+            <button onclick="demoReturn()">Калькулятор квадратов</button>
+        </div>
+    </section>
+
+    <section id="dialogs">
+        <h2>3. Диалоговые окна</h2>
+        
+        <div class="example">
+            <h3>3.1 alert()</h3>
+            <button onclick="demoAlert()">Показать alert</button>
+        </div>
+        
+        <div class="example">
+            <h3>3.2 confirm()</h3>
+            <button onclick="demoConfirm()">Показать confirm</button>
+        </div>
+        
+        <div class="example">
+            <h3>3.3 prompt()</h3>
+            <button onclick="demoPrompt()">Показать prompt</button>
+        </div>
+    </section>
+
+    <script>
+        document.getElementById('bodyScriptBtn').onclick = function() {
+            alert('Этот скрипт был в конце body!');
+        };
+    </script>
+    <script src="lr9.js"></script>
+</body>
+</html>
