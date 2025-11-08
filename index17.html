@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Практика работы с событиями в JavaScript</title>
+    <link rel="stylesheet" href="index17.css">
+</head>
+<body>
+    <div class="scroll-indicator"></div>
+    
+    <header>
+        <h1>Практика работы с событиями в JavaScript</h1>
+        <p>Демонстрация различных типов интерфейсных событий</p>
+    </header>
+    
+    <!-- События мыши -->
+    <section id="mouse-events">
+        <h2>1. События мыши</h2>
+        
+        <div class="example">
+            <h3>Пример 1: Клики</h3>
+            <div class="interactive-area">
+                <button id="click-button">Нажми меня</button>
+                <p id="click-counter">Количество кликов: 0</p>
+            </div>
+        </div>
+        
+        <div class="example">
+            <h3>Пример 2: Движение мыши</h3>
+            <div class="interactive-area" id="mouse-tracker">
+                <p>Двигайте мышью в этой области</p>
+                <p>Координаты: X: <span id="mouse-x">0</span>, Y: <span id="mouse-y">0</span></p>
+            </div>
+        </div>
+        
+        <div class="example">
+            <h3>Пример 3: Наведение и уход</h3>
+            <div class="interactive-area">
+                <div id="hover-element" style="width: 150px; height: 50px; background-color: #e74c3c; color: white; display: flex; align-items: center; justify-content: center; border-radius: 5px;">
+                    Наведи на меня
+                </div>
+                <p id="hover-status">Статус: не наведено</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- События клавиатуры -->
+    <section id="keyboard-events">
+        <h2>2. События клавиатуры</h2>
+        
+        <div class="example">
+            <h3>Пример 1: Нажатие клавиш</h3>
+            <div class="interactive-area">
+                <input type="text" id="key-input" placeholder="Введите текст здесь">
+                <p>Последняя нажатая клавиша: <span id="last-key">-</span></p>
+                <p>Код клавиши: <span id="key-code">-</span></p>
+            </div>
+        </div>
+        
+        <div class="example">
+            <h3>Пример 2: Сочетания клавиш</h3>
+            <div class="interactive-area">
+                <p>Нажмите Ctrl + S или Cmd + S</p>
+                <p id="shortcut-status">Статус: не нажато</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Drag & Drop события -->
+    <section id="drag-drop-events">
+        <h2>3. Drag & Drop события</h2>
+        
+        <div class="example">
+            <h3>Пример 1: Перетаскивание элементов</h3>
+            <div class="interactive-area" style="display: flex; flex-wrap: wrap;">
+                <div class="draggable" draggable="true" id="drag1">Элемент 1</div>
+                <div class="draggable" draggable="true" id="drag2">Элемент 2</div>
+                <div class="draggable" draggable="true" id="drag3">Элемент 3</div>
+                
+                <div class="drop-zone" id="drop-zone">Перетащите сюда</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- События указателя -->
+    <section id="pointer-events">
+        <h2>4. События указателя</h2>
+        
+        <div class="example">
+            <h3>Пример 1: События Pointer (поддержка touch и pen)</h3>
+            <div class="interactive-area" id="pointer-area">
+                <p>Коснитесь или кликните в этой области</p>
+                <p>Тип указателя: <span id="pointer-type">-</span></p>
+                <p>ID указателя: <span id="pointer-id">-</span></p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- События полосы прокрутки -->
+    <section id="scroll-events">
+        <h2>5. События полосы прокрутки</h2>
+        
+        <div class="example">
+            <h3>Пример 1: Отслеживание прокрутки</h3>
+            <div class="interactive-area" style="height: 150px; overflow-y: auto;">
+                <div style="height: 400px; padding: 10px;">
+                    <p>Прокрутите эту область</p>
+                    <p>Положение прокрутки: <span id="scroll-position">0</span>px</p>
+                    <p>Процент прокрутки: <span id="scroll-percent">0</span>%</p>
+                    <p>Продолжайте прокручивать...</p>
+                    <p>Почти достигли конца...</p>
+                    <p>Вы внизу!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- События сенсорных экранов -->
+    <section id="touch-events">
+        <h2>6. События сенсорных экранов</h2>
+        
+        <div class="example">
+            <h3>Пример 1: Касания</h3>
+            <div class="interactive-area" id="touch-area">
+                <p>Коснитесь этого блока (на сенсорном устройстве)</p>
+                <p>Количество касаний: <span id="touch-count">0</span></p>
+            </div>
+        </div>
+        
+        <div class="example">
+            <h3>Пример 2: Жесты (масштабирование и вращение)</h3>
+            <div class="interactive-area">
+                <p>Используйте жест масштабирования (на сенсорном устройстве)</p>
+                <div style="width: 100px; height: 100px; background-color: #9b59b6; margin: 0 auto; transform: scale(1);" id="scale-element"></div>
+                <p>Масштаб: <span id="scale-value">1</span></p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- События, связанные с таймером -->
+    <section id="timer-events">
+        <h2>7. События, связанные с таймером</h2>
+        
+        <div class="example">
+            <h3>Пример 1: Таймеры setTimeout и setInterval</h3>
+            <div class="interactive-area">
+                <button id="start-timer">Запустить таймер</button>
+                <button id="stop-timer">Остановить таймер</button>
+                <div class="timer-display" id="timer">0</div>
+            </div>
+        </div>
+        
+        <div class="example">
+            <h3>Пример 2: Задержка выполнения</h3>
+            <div class="interactive-area">
+                <button id="delayed-action">Запустить с задержкой</button>
+                <p id="delayed-status">Готов к выполнению</p>
+            </div>
+        </div>
+    </section>
+    
+    <section>
+        <h2>Журнал событий</h2>
+        <div class="event-log" id="event-log">
+            Журнал событий пуст...
+        </div>
+        <button id="clear-log">Очистить журнал</button>
+    </section>
+
+    <script>
+        // Функция для логирования событий
+        function logEvent(message) {
+            const logElement = document.getElementById('event-log');
+            const timestamp = new Date().toLocaleTimeString();
+            logElement.innerHTML = `[${timestamp}] ${message}<br>${logElement.innerHTML}`;
+            
+            // Ограничиваем количество записей в журнале
+            const lines = logElement.innerHTML.split('<br>');
+            if (lines.length > 20) {
+                logElement.innerHTML = lines.slice(0, 20).join('<br>');
+            }
+        }
+        
+        // Очистка журнала
+        document.getElementById('clear-log').addEventListener('click', function() {
+            document.getElementById('event-log').innerHTML = 'Журнал очищен...';
+            logEvent('Журнал событий очищен');
+        });
+        
+        // 1. СОБЫТИЯ МЫШИ
+        
+        // Пример 1: Клики
+        let clickCount = 0;
+        const clickButton = document.getElementById('click-button');
+        const clickCounter = document.getElementById('click-counter');
+        
+        clickButton.addEventListener('click', function() {
+            clickCount++;
+            clickCounter.textContent = `Количество кликов: ${clickCount}`;
+            logEvent(`Клик на кнопке (всего: ${clickCount})`);
+        });
+        
+        // Пример 2: Движение мыши
+        const mouseTracker = document.getElementById('mouse-tracker');
+        const mouseX = document.getElementById('mouse-x');
+        const mouseY = document.getElementById('mouse-y');
+        
+        mouseTracker.addEventListener('mousemove', function(e) {
+            mouseX.textContent = e.offsetX;
+            mouseY.textContent = e.offsetY;
+        });
+        
+        // Пример 3: Наведение и уход
+        const hoverElement = document.getElementById('hover-element');
+        const hoverStatus = document.getElementById('hover-status');
+        
+        hoverElement.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#2ecc71';
+            hoverStatus.textContent = 'Статус: наведено';
+            hoverStatus.style.color = '#2ecc71';
+            logEvent('Наведение на элемент');
+        });
+        
+        hoverElement.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '#e74c3c';
+            hoverStatus.textContent = 'Статус: не наведено';
+            hoverStatus.style.color = '#e74c3c';
+            logEvent('Уход с элемента');
+        });
+        
+        // 2. СОБЫТИЯ КЛАВИАТУРЫ
+        
+        // Пример 1: Нажатие клавиш
+        const keyInput = document.getElementById('key-input');
+        const lastKey = document.getElementById('last-key');
+        const keyCode = document.getElementById('key-code');
+        
+        keyInput.addEventListener('keydown', function(e) {
+            lastKey.textContent = e.key;
+            keyCode.textContent = e.code;
+            logEvent(`Нажата клавиша: ${e.key} (код: ${e.code})`);
+        });
+        
+        // Пример 2: Сочетания клавиш
+        const shortcutStatus = document.getElementById('shortcut-status');
+        
+        document.addEventListener('keydown', function(e) {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault(); // Предотвращаем стандартное действие браузера
+                shortcutStatus.textContent = 'Статус: сочетание нажато!';
+                shortcutStatus.style.color = '#e74c3c';
+                logEvent('Нажато сочетание клавиш Ctrl+S / Cmd+S');
+                
+                // Сбрасываем статус через 2 секунды
+                setTimeout(() => {
+                    shortcutStatus.textContent = 'Статус: не нажато';
+                    shortcutStatus.style.color = '#333';
+                }, 2000);
+            }
+        });
+        
+        // 3. DRAG & DROP СОБЫТИЯ
+        
+        // Пример 1: Перетаскивание элементов
+        const draggables = document.querySelectorAll('.draggable');
+        const dropZone = document.getElementById('drop-zone');
+        
+        draggables.forEach(draggable => {
+            draggable.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', this.id);
+                this.style.opacity = '0.5';
+                logEvent(`Начато перетаскивание: ${this.id}`);
+            });
+            
+            draggable.addEventListener('dragend', function() {
+                this.style.opacity = '1';
+                logEvent(`Завершено перетаскивание: ${this.id}`);
+            });
+        });
+        
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            this.style.borderColor = '#3498db';
+            this.style.backgroundColor = '#ecf0f1';
+        });
+        
+        dropZone.addEventListener('dragleave', function() {
+            this.style.borderColor = '#ccc';
+            this.style.backgroundColor = 'transparent';
+        });
+        
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            const id = e.dataTransfer.getData('text/plain');
+            const draggedElement = document.getElementById(id);
+            
+            this.appendChild(draggedElement);
+            this.style.borderColor = '#ccc';
+            this.style.backgroundColor = 'transparent';
+            
+            logEvent(`Элемент ${id} помещен в зону сброса`);
+        });
+        
+        // 4. СОБЫТИЯ УКАЗАТЕЛЯ
+        
+        // Пример 1: События Pointer
+        const pointerArea = document.getElementById('pointer-area');
+        const pointerType = document.getElementById('pointer-type');
+        const pointerId = document.getElementById('pointer-id');
+        
+        pointerArea.addEventListener('pointerdown', function(e) {
+            pointerType.textContent = e.pointerType;
+            pointerId.textContent = e.pointerId;
+            logEvent(`Pointer down: тип - ${e.pointerType}, ID - ${e.pointerId}`);
+        });
+        
+        // 5. СОБЫТИЯ ПОЛОСЫ ПРОКРУТКИ
+        
+        // Пример 1: Отслеживание прокрутки
+        const scrollContainer = document.querySelector('#scroll-events .interactive-area');
+        const scrollPosition = document.getElementById('scroll-position');
+        const scrollPercent = document.getElementById('scroll-percent');
+        
+        scrollContainer.addEventListener('scroll', function() {
+            const scrollTop = this.scrollTop;
+            const scrollHeight = this.scrollHeight - this.clientHeight;
+            const percent = Math.round((scrollTop / scrollHeight) * 100);
+            
+            scrollPosition.textContent = scrollTop;
+            scrollPercent.textContent = percent;
+            
+            logEvent(`Прокрутка: ${scrollTop}px (${percent}%)`);
+        });
+        
+        // Индикатор прокрутки для всей страницы
+        window.addEventListener('scroll', function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.scroll-indicator').style.width = scrolled + '%';
+        });
+        
+        // 6. СОБЫТИЯ СЕНСОРНЫХ ЭКРАНОВ
+        
+        // Пример 1: Касания
+        const touchArea = document.getElementById('touch-area');
+        const touchCount = document.getElementById('touch-count');
+        
+        touchArea.addEventListener('touchstart', function(e) {
+            touchCount.textContent = e.touches.length;
+            logEvent(`Касание: ${e.touches.length} точек`);
+        });
+        
+        touchArea.addEventListener('touchmove', function(e) {
+            touchCount.textContent = e.touches.length;
+        });
+        
+        touchArea.addEventListener('touchend', function() {
+            touchCount.textContent = '0';
+            logEvent('Касание завершено');
+        });
+        
+        // Пример 2: Жесты (упрощенная версия)
+        const scaleElement = document.getElementById('scale-element');
+        const scaleValue = document.getElementById('scale-value');
+        let currentScale = 1;
+        
+        // Упрощенная реализация жеста масштабирования
+        scaleElement.addEventListener('click', function() {
+            currentScale += 0.1;
+            if (currentScale > 2) currentScale = 1;
+            
+            this.style.transform = `scale(${currentScale})`;
+            scaleValue.textContent = currentScale.toFixed(1);
+            
+            logEvent(`Масштаб изменен: ${currentScale.toFixed(1)}`);
+        });
+        
+        // 7. СОБЫТИЯ, СВЯЗАННЫЕ С ТАЙМЕРОМ
+        
+        // Пример 1: Таймеры
+        const timerDisplay = document.getElementById('timer');
+        const startTimerBtn = document.getElementById('start-timer');
+        const stopTimerBtn = document.getElementById('stop-timer');
+        let timerValue = 0;
+        let timerInterval;
+        
+        startTimerBtn.addEventListener('click', function() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(function() {
+                timerValue++;
+                timerDisplay.textContent = timerValue;
+            }, 1000);
+            
+            logEvent('Таймер запущен');
+        });
+        
+        stopTimerBtn.addEventListener('click', function() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                logEvent('Таймер остановлен');
+            }
+        });
+        
+        // Пример 2: Задержка выполнения
+        const delayedActionBtn = document.getElementById('delayed-action');
+        const delayedStatus = document.getElementById('delayed-status');
+        
+        delayedActionBtn.addEventListener('click', function() {
+            delayedStatus.textContent = 'Ожидание...';
+            delayedStatus.style.color = '#e74c3c';
+            
+            setTimeout(function() {
+                delayedStatus.textContent = 'Действие выполнено!';
+                delayedStatus.style.color = '#2ecc71';
+                logEvent('Отложенное действие выполнено');
+                
+                // Сбрасываем статус через 3 секунды
+                setTimeout(() => {
+                    delayedStatus.textContent = 'Готов к выполнению';
+                    delayedStatus.style.color = '#333';
+                }, 3000);
+            }, 2000);
+            
+            logEvent('Запущено отложенное действие (2 сек)');
+        });
+        
+        // Инициализация
+        logEvent('Демонстрация событий инициализирована');
+    </script>
+</body>
+</html>

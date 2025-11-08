@@ -1,0 +1,88 @@
+1. Что понимается под объектом в JavaScript? Приведите примеры известных вам объектов
+В JavaScript объекты — это основная структура данных для хранения коллекций значений и более сложных сущностей. Объект представляет собой набор свойств (пар "ключ-значение"), где ключ — это строка (или символ), а значение может быть любого типа, включая другие объекты или функции (которые в этом случае называются методами)
+
+2. Пример описания пользовательского объекта в JS
+Пользовательский объект можно создать с помощью литерала объекта или через конструктор. Вот пример создания с помощью литерала:
+
+javascript
+let user = {
+  name: "Алексей",
+  age: 30,
+  "likes programming": true,  // свойство с пробелом в названии
+  greet: function() {
+    alert("Привет, меня зовут " + this.name);
+  }
+};
+Пример создания объекта через конструктор:
+
+javascript
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+  this.greet = function() {
+    alert("Привет, меня зовут " + this.name);
+  };
+}
+
+let user1 = new User("Мария", 25);
+
+3. Пример доступа к свойствам объекта в JS
+Доступ к свойствам объекта можно получить двумя способами:
+
+Через точку (для свойств с допустимыми идентификаторами):
+
+javascript
+console.log(user.name); // "Алексей"
+user.greet(); // вызов метода
+Через квадратные скобки (для свойств с специальными символами или динамических имен):
+
+javascript
+console.log(user["age"]); // 30
+let prop = "likes programming";
+console.log(user[prop]); // true
+
+Команда для удаления свойства. Пример
+Для удаления свойства используется оператор delete 3:
+
+javascript
+delete user.age; // удаляем свойство age
+console.log(user.age); // undefined
+⚠️ Важно: delete удаляет только свойства самого объекта, но не унаследованные свойства из цепочки прототипов.
+
+5. Команда для проверки существования свойства. Пример
+Для проверки существования свойства можно использовать:
+
+Оператор in — проверяет наличие свойства в самом объекте и в его прототипах 1:
+
+javascript
+console.log("name" in user); // true
+console.log("toString" in user); // true (унаследованное свойство)
+Метод hasOwnProperty() — проверяет только собственные свойства объекта 10:
+
+javascript
+console.log(user.hasOwnProperty("name")); // true
+console.log(user.hasOwnProperty("toString")); // false
+
+6. Команда для перебора свойств объекта. Пример
+Для перебора свойств объекта используется цикл for...in 14:
+
+javascript
+for (let key in user) {
+  if (user.hasOwnProperty(key)) { // проверяем, что свойство собственное
+    console.log(key + ": " + user[key]);
+  }
+}
+Также можно использовать методы Object.keys(), Object.values() и Object.entries():
+
+javascript
+// Получаем массив ключей объекта
+let keys = Object.keys(user);
+console.log(keys); // ["name", "likes programming", "greet"]
+
+// Получаем массив значений свойств
+let values = Object.values(user);
+console.log(values);
+
+// Получаем массив пар [ключ, значение]
+let entries = Object.entries(user);
+console.log(entries);

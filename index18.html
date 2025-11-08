@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Форма регистрации с валидацией</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .form-container {
+            padding: 30px;
+        }
+        
+        .form-section {
+            margin-bottom: 25px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        h2 {
+            color: #2575fc;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #2575fc;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.2);
+        }
+        
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 5px;
+        }
+        
+        .radio-option, .checkbox-option {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-option input, .checkbox-option input {
+            width: auto;
+            margin-right: 8px;
+        }
+        
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .success {
+            color: #2ecc71;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+        
+        button {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #2575fc 0%, #6a11cb 100%);
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(37, 117, 252, 0.4);
+        }
+        
+        .btn-reset {
+            background-color: #f8f9fa;
+            color: #444;
+            border: 2px solid #ddd;
+        }
+        
+        .btn-reset:hover {
+            background-color: #e9ecef;
+        }
+        
+        .results {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 25px;
+            display: none;
+        }
+        
+        .results h3 {
+            color: #2575fc;
+            margin-bottom: 15px;
+        }
+        
+        .results pre {
+            white-space: pre-wrap;
+            font-family: 'Consolas', monospace;
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        
+        .validation-info {
+            background-color: #e8f4fd;
+            border-left: 4px solid #2575fc;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .regex-demo {
+            background-color: #f0f8ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+        
+        .regex-demo h4 {
+            color: #2575fc;
+            margin-bottom: 10px;
+        }
+        
+        .regex-test {
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #e6f2ff;
+            border-radius: 5px;
+        }
+        
+        @media (max-width: 600px) {
+            .buttons {
+                flex-direction: column;
+            }
+            
+            .radio-group, .checkbox-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Форма регистрации</h1>
+            <p class="subtitle">Демонстрация работы с формами, валидацией и регулярными выражениями</p>
+        </header>
+        
+        <div class="form-container">
+            <form id="registrationForm">
+                <div class="form-section">
+                    <h2>Основная информация</h2>
+                    
+                    <div class="form-group">
+                        <label for="fullName">ФИО *</label>
+                        <input type="text" id="fullName" name="fullName" placeholder="Введите ваше полное имя">
+                        <div class="error" id="fullNameError">ФИО должно содержать только буквы и состоять из 2-3 слов</div>
+                        <div class="success" id="fullNameSuccess">Корректное ФИО</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" placeholder="example@domain.com" required>
+                        <div class="error" id="emailError">Введите корректный email адрес</div>
+                        <div class="success" id="emailSuccess">Корректный email</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Телефон *</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+375 (99) 123-45-67" 
+                               pattern="\+375\s?[\(]{0,1}[0-9]{2}[\)]{0,1}\s?[0-9]{3}[-]{0,1}[0-9]{2}[-]{0,1}[0-9]{2}" 
+                               required>
+                        <div class="error" id="phoneError">Телефон должен быть в формате +375 (XX) XXX-XX-XX</div>
+                        <div class="success" id="phoneSuccess">Корректный номер телефона</div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Дополнительная информация</h2>
+                    
+                    <div class="form-group">
+                        <label>Пол *</label>
+                        <div class="radio-group">
+                            <div class="radio-option">
+                                <input type="radio" id="male" name="gender" value="male" required>
+                                <label for="male">Мужской</label>
+                            </div>
+                            <div class="radio-option">
+                                <input type="radio" id="female" name="gender" value="female">
+                                <label for="female">Женский</label>
+                            </div>
+                        </div>
+                        <div class="error" id="genderError">Выберите ваш пол</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Интересы</label>
+                        <div class="checkbox-group">
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="sports" name="interests" value="sports">
+                                <label for="sports">Спорт</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="music" name="interests" value="music">
+                                <label for="music">Музыка</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="books" name="interests" value="books">
+                                <label for="books">Книги</label>
+                            </div>
+                            <div class="checkbox-option">
+                                <input type="checkbox" id="travel" name="interests" value="travel">
+                                <label for="travel">Путешествия</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="country">Страна</label>
+                        <select id="country" name="country">
+                            <option value="">Выберите страну</option>
+                            <option value="ru">Россия</option>
+                            <option value="us">США</option>
+                            <option value="de">Германия</option>
+                            <option value="fr">Франция</option>
+                            <option value="other">Другая</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>Пароль</h2>
+                    
+                    <div class="form-group">
+                        <label for="password">Пароль *</label>
+                        <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+                        <div class="error" id="passwordError">Пароль должен содержать минимум 8 символов, включая буквы и цифры</div>
+                        <div class="success" id="passwordSuccess">Надежный пароль</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Подтверждение пароля *</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Повторите пароль" required>
+                        <div class="error" id="confirmPasswordError">Пароли не совпадают</div>
+                        <div class="success" id="confirmPasswordSuccess">Пароли совпадают</div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>О себе</h2>
+                    
+                    <div class="form-group">
+                        <label for="bio">Краткая биография</label>
+                        <textarea id="bio" name="bio" rows="4" placeholder="Расскажите немного о себе"></textarea>
+                    </div>
+                </div>
+                
+                <div class="buttons">
+                    <button type="submit" class="btn-submit">Отправить форму</button>
+                    <button type="button" class="btn-reset" id="resetBtn">Очистить форму</button>
+                </div>
+            </form>
+            
+            <div class="results" id="results">
+                <h3>Данные формы:</h3>
+                <pre id="resultsContent"></pre>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('registrationForm');
+            const resetBtn = document.getElementById('resetBtn');
+            const resultsDiv = document.getElementById('results');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            // Регулярные выражения для валидации
+            const regexPatterns = {
+                fullName: /^[А-ЯЁ][а-яё]+\s[А-ЯЁ][а-яё]+(\s[А-ЯЁ][а-яё]+)?$/,
+                email: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                phone: /^\+375\s?[\(]{0,1}[0-9]{2}[\)]{0,1}\s?[0-9]{3}[-]{0,1}[0-9]{2}[-]{0,1}[0-9]{2}$/,
+                password: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/
+            };
+            
+            // Валидация полей в реальном времени
+            document.getElementById('fullName').addEventListener('input', function() {
+                validateField(this, regexPatterns.fullName, 'fullNameError', 'fullNameSuccess', 
+                             'ФИО должно содержать только буквы и состоять из 2-3 слов', 'Корректное ФИО');
+            });
+            
+            document.getElementById('email').addEventListener('input', function() {
+                validateField(this, regexPatterns.email, 'emailError', 'emailSuccess', 
+                             'Введите корректный email адрес', 'Корректный email');
+            });
+            
+            document.getElementById('phone').addEventListener('input', function() {
+                validateField(this, regexPatterns.phone, 'phoneError', 'phoneSuccess', 
+                             'Телефон должен быть в формате +375 (XX) XXX-XX-XX', 'Корректный номер телефона');
+            });
+            
+            document.getElementById('password').addEventListener('input', function() {
+                validateField(this, regexPatterns.password, 'passwordError', 'passwordSuccess', 
+                             'Пароль должен содержать минимум 8 символов, включая буквы и цифры', 'Надежный пароль');
+                validatePasswordMatch();
+            });
+            
+            document.getElementById('confirmPassword').addEventListener('input', function() {
+                validatePasswordMatch();
+            });
+            
+            // Функция валидации поля
+            function validateField(field, regex, errorId, successId, errorMsg, successMsg) {
+                const errorElement = document.getElementById(errorId);
+                const successElement = document.getElementById(successId);
+                
+                if (!field.value.trim()) {
+                    errorElement.style.display = 'none';
+                    successElement.style.display = 'none';
+                    field.style.borderColor = '#ddd';
+                } else if (regex.test(field.value)) {
+                    errorElement.style.display = 'none';
+                    successElement.textContent = successMsg;
+                    successElement.style.display = 'block';
+                    field.style.borderColor = '#2ecc71';
+                } else {
+                    successElement.style.display = 'none';
+                    errorElement.textContent = errorMsg;
+                    errorElement.style.display = 'block';
+                    field.style.borderColor = '#e74c3c';
+                }
+            }
+            
+            // Функция проверки совпадения паролей
+            function validatePasswordMatch() {
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                const errorElement = document.getElementById('confirmPasswordError');
+                const successElement = document.getElementById('confirmPasswordSuccess');
+                
+                if (!confirmPassword) {
+                    errorElement.style.display = 'none';
+                    successElement.style.display = 'none';
+                    document.getElementById('confirmPassword').style.borderColor = '#ddd';
+                } else if (password === confirmPassword) {
+                    errorElement.style.display = 'none';
+                    successElement.style.display = 'block';
+                    document.getElementById('confirmPassword').style.borderColor = '#2ecc71';
+                } else {
+                    successElement.style.display = 'none';
+                    errorElement.style.display = 'block';
+                    document.getElementById('confirmPassword').style.borderColor = '#e74c3c';
+                }
+            }
+            
+            // Обработчик отправки формы
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                // Проверка всех полей перед отправкой
+                let isValid = true;
+                
+                // Проверка ФИО
+                const fullName = document.getElementById('fullName').value;
+                if (!fullName || !regexPatterns.fullName.test(fullName)) {
+                    document.getElementById('fullNameError').style.display = 'block';
+                    document.getElementById('fullName').style.borderColor = '#e74c3c';
+                    isValid = false;
+                }
+                
+                // Проверка email
+                const email = document.getElementById('email').value;
+                if (!email || !regexPatterns.email.test(email)) {
+                    document.getElementById('emailError').style.display = 'block';
+                    document.getElementById('email').style.borderColor = '#e74c3c';
+                    isValid = false;
+                }
+                
+                // Проверка телефона
+                const phone = document.getElementById('phone').value;
+                if (!phone || !regexPatterns.phone.test(phone)) {
+                    document.getElementById('phoneError').style.display = 'block';
+                    document.getElementById('phone').style.borderColor = '#e74c3c';
+                    isValid = false;
+                }
+                
+                // Проверка пароля
+                const password = document.getElementById('password').value;
+                if (!password || !regexPatterns.password.test(password)) {
+                    document.getElementById('passwordError').style.display = 'block';
+                    document.getElementById('password').style.borderColor = '#e74c3c';
+                    isValid = false;
+                }
+                
+                // Проверка подтверждения пароля
+                const confirmPassword = document.getElementById('confirmPassword').value;
+                if (!confirmPassword || password !== confirmPassword) {
+                    document.getElementById('confirmPasswordError').style.display = 'block';
+                    document.getElementById('confirmPassword').style.borderColor = '#e74c3c';
+                    isValid = false;
+                }
+                
+                // Проверка пола
+                const gender = document.querySelector('input[name="gender"]:checked');
+                if (!gender) {
+                    document.getElementById('genderError').style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    // Сбор данных формы
+                    const formData = {
+                        fullName: fullName,
+                        email: email,
+                        phone: phone,
+                        gender: gender.value,
+                        interests: Array.from(document.querySelectorAll('input[name="interests"]:checked'))
+                                    .map(checkbox => checkbox.value),
+                        country: document.getElementById('country').value,
+                        bio: document.getElementById('bio').value
+                    };
+                    
+                    // Отображение результатов
+                    resultsContent.textContent = JSON.stringify(formData, null, 2);
+                    resultsDiv.style.display = 'block';
+                    
+                    // Прокрутка к результатам
+                    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+                    
+                    // Демонстрация методов работы с регулярными выражениями
+                    demonstrateRegexMethods();
+                }
+            });
+            
+            // Обработчик кнопки сброса
+            resetBtn.addEventListener('click', function() {
+                form.reset();
+                resultsDiv.style.display = 'none';
+                
+                // Сброс стилей полей
+                const fields = form.querySelectorAll('input, select, textarea');
+                fields.forEach(field => {
+                    field.style.borderColor = '#ddd';
+                });
+                
+                // Скрытие сообщений об ошибках и успехе
+                const messages = form.querySelectorAll('.error, .success');
+                messages.forEach(msg => {
+                    msg.style.display = 'none';
+                });
+            });
+            
+            // Демонстрация методов работы с регулярными выражениями
+            function demonstrateRegexMethods() {
+                console.log('=== Демонстрация методов RegExp и String ===');
+                
+                const testText = "Пример текста: email@example.com, +375 (92) 345-67-89, Иван Иванов";
+                
+                // Метод test()
+                const emailRegex = /[^\s@]+@[^\s@]+\.[^\s@]+/;
+                console.log('test() - есть ли email в тексте:', emailRegex.test(testText));
+                
+                // Метод exec()
+                const phoneRegex = /\+375\s?[\(]{0,1}[0-9]{3}[\)]{0,1}\s?[0-9]{3}[-]{0,1}[0-9]{2}[-]{0,1}[0-9]{2}/;
+                console.log('exec() - поиск телефона:', phoneRegex.exec(testText));
+                
+                // Метод match()
+                console.log('match() - поиск всех email:', testText.match(emailRegex));
+                
+                // Метод search()
+                console.log('search() - позиция email:', testText.search(emailRegex));
+                
+                // Метод replace()
+                console.log('replace() - замена email:', testText.replace(emailRegex, 'EMAIL'));
+                
+                // Метод split()
+                console.log('split() - разделение по запятым:', testText.split(','));
+            }
+        });
+    </script>
+</body>
+</html>
